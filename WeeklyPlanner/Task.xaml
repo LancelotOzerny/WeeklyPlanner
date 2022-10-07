@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="WeeklyPlanner.Task"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WeeklyPlanner"
+             mc:Ignorable="d"
+             Background="AliceBlue" Width="560" Height="50"
+             BorderBrush="DarkGray"
+             BorderThickness="1">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <TextBlock x:Name="TextBlock_Value" FontSize="18px" VerticalAlignment="Center" Padding="10 0 0 0">Empty Value</TextBlock>
+    </Grid>
+</UserControl>
