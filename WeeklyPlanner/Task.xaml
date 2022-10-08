@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WeeklyPlanner"
              mc:Ignorable="d"
-             Background="AliceBlue" Width="560" Height="50"
+             Background="AliceBlue" MinWidth="300" MinHeight="40"
              BorderBrush="DarkGray"
              BorderThickness="1">
     <Grid>

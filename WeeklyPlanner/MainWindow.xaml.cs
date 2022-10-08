@@ -24,7 +24,17 @@ namespace WeeklyPlanner
         {
             InitializeComponent();
 
-            TasksContainer.Children.Add(new Task());
+            for (int i = 0; i < 420; ++i)
+            {
+                Task item = new Task($"Задача {i + 1}");
+                AddTask(item);
+            }
+        }
+
+        public void AddTask(Task item)
+        {
+            item.Margin = new Thickness(0, 10, 0, 0);
+            TasksContainer.Items.Add(item);
         }
     }
 }

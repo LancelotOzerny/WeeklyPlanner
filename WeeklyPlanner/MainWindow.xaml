@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:WeeklyPlanner"
         mc:Ignorable="d"
         Title="MainWindow" Height="480" Width="640">
-    <Grid x:Name="TasksContainer">
-        <local:Task Height="50" Width="620" Status="Wait" Value="Привет, мир!"/>
-    </Grid>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+        <ItemsControl x:Name="TasksContainer" Padding="20 20 20 10">
+        
+        </ItemsControl>
+    </ScrollViewer>
 </Window>
