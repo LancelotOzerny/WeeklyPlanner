@@ -20,21 +20,44 @@ namespace WeeklyPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Task> tasks = new List<Task>();
+
         public MainWindow()
         {
             InitializeComponent();
 
-            for (int i = 0; i < 420; ++i)
+            for (int i = 0; i < 3; ++i)
             {
                 Task item = new Task($"Задача {i + 1}");
                 AddTask(item);
+                ShowTasks();
             }
         }
 
         public void AddTask(Task item)
         {
             item.Margin = new Thickness(0, 10, 0, 0);
-            TasksContainer.Items.Add(item);
+            tasks.Add(item);
+        }
+
+        public void ShowTasks()
+        {
+            TasksContainer.Items.Clear();
+
+            foreach (Task item in tasks)
+            {
+                TasksContainer.Items.Add(item);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Task task = new Task(Task_Value.Text, Task.TaskStatus.Wait, (DayOfWeek)Convert.ToInt32(Task_DayWeek.SelectedIndex));
+            AddTask(task);
+            ShowTasks();
+
+            Task_DayWeek.SelectedIndex = 0;
+            Task_Value.Text = String.Empty;
         }
     }
 }

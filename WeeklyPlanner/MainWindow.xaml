@@ -7,9 +7,36 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="480" Width="640">
 
-    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
-        <ItemsControl x:Name="TasksContainer" Padding="20 20 20 10">
-        
-        </ItemsControl>
-    </ScrollViewer>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="TasksContainer" Padding="20 20 20 10">
+
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="250px" Width="1*"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="250px" Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="Task_Value" FontSize="18" VerticalAlignment="Center" Height="40px"></TextBox>
+            <ComboBox x:Name="Task_DayWeek" SelectedIndex="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="18" Grid.Column="1" VerticalAlignment="Center" Height="40px" InputScope="Default">
+                <ComboBoxItem Tag="0">Воскресенье</ComboBoxItem>
+                <ComboBoxItem Tag="1">Понедельник</ComboBoxItem>
+                <ComboBoxItem Tag="2">Вторник</ComboBoxItem>
+                <ComboBoxItem Tag="3">Среда</ComboBoxItem>
+                <ComboBoxItem Tag="4">Четверг</ComboBoxItem>
+                <ComboBoxItem Tag="5">Пятница</ComboBoxItem>
+                <ComboBoxItem Tag="6">Суббота</ComboBoxItem>
+            </ComboBox>
+            <Button FontSize="18px" Grid.Column="2" Content="Создать" VerticalAlignment="Center" Height="40px" Click="Button_Click"></Button>
+        </Grid>
+    </Grid>
 </Window>
