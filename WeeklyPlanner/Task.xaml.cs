@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WeeklyPlanner
 {
@@ -23,7 +13,7 @@ namespace WeeklyPlanner
         /// <summary>
         /// Текущий статус задачи - "готова" или "в ожидании"
         /// </summary>
-        public enum TaskStatus { Wait, Ok }
+        public enum TaskStatus { Wait = 0, Ok = 1 }
 
         private TaskStatus _taskStatus = TaskStatus.Wait;
         private string _value = string.Empty;
@@ -57,15 +47,18 @@ namespace WeeklyPlanner
                 if (value == TaskStatus.Ok)
                 {
                     this.Background = (Brush)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Brush)).ConvertFromInvariantString("Green");
-                    TextBlock_Value.TextDecorations = TextDecorations.Strikethrough;
+                    /*TextBlock_Value.TextDecorations = TextDecorations.Strikethrough;*/
                     _taskStatus = TaskStatus.Ok;
                 }
 
                 if (value == TaskStatus.Wait)
                 {
                     this.Background = (Brush)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Brush)).ConvertFromInvariantString("Yellow");
-                    TextBlock_Value.TextDecorations.Clear();
-                    _taskStatus = TaskStatus.Ok;
+                    /*if (TextBlock_Value.TextDecorations.Count > 0)
+                    {
+                        TextBlock_Value.TextDecorations.Clear();
+                    }*/
+                    _taskStatus = TaskStatus.Wait;
                 }
             }
         }

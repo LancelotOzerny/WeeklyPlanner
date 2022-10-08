@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Linq;
+using System.Threading;
 
 namespace WeeklyPlanner
 {
@@ -20,32 +12,38 @@ namespace WeeklyPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Task> tasks = new List<Task>();
+        private List<Task> _tasks = new List<Task>();
+        public string DataFilePath { get; set; }
 
         public MainWindow()
         {
-            InitializeComponent();
+            DataFilePath = "Data.xml";
 
-            for (int i = 0; i < 3; ++i)
+            InitializeComponent();
+            Task_Value.Text = "0";
+
+            try
             {
-                Task item = new Task($"Задача {i + 1}");
-                AddTask(item);
+                XElement data = XElement.Load(DataFilePath);
+                LoadData(data);
                 ShowTasks();
             }
+            catch (Exception) {}
         }
 
         public void AddTask(Task item)
         {
             item.Margin = new Thickness(0, 10, 0, 0);
-            tasks.Add(item);
+            _tasks.Add(item);
         }
 
         public void ShowTasks()
         {
             TasksContainer.Items.Clear();
 
-            foreach (Task item in tasks)
+            foreach (Task item in _tasks)
             {
+                item.Margin = new Thickness(0, 10, 0, 0);
                 TasksContainer.Items.Add(item);
             }
         }
@@ -58,6 +56,71 @@ namespace WeeklyPlanner
 
             Task_DayWeek.SelectedIndex = 0;
             Task_Value.Text = String.Empty;
+
+            SaveData();
+        }
+
+        private void LoadData(XElement data)
+        {
+            IEnumerable<XElement> xElements = data.Elements();
+
+            if (xElements != null)
+            {
+                foreach (XElement xElement in xElements)
+                {
+                    LoadData(xElement);
+
+                    if (xElement.Name == "TaskElement")
+                    {
+                        Task LoadedTask = new Task();
+
+                        foreach (XElement attr in xElement.Elements())
+                        {
+                            if (attr.Name == "Value")
+                            {
+                                LoadedTask.Value = Convert.ToString(attr.Value);
+                            }
+
+                            if (attr.Name == "Status")
+                            {
+                                LoadedTask.Status = (Task.TaskStatus)Convert.ToInt32(attr.Value);
+                            }
+
+                            if (attr.Name == "DayOfWeek")
+                            {
+                                LoadedTask.DayOfWeek = (DayOfWeek)Convert.ToInt32(attr.Value);
+                            }
+                        }
+                        _tasks.Add(LoadedTask);
+                    }
+                }
+            }
+        }
+
+        private void SaveData()
+        {
+            XElement data = new XElement("TasksData");
+            foreach (Task task in _tasks)
+            {
+                task.Status = Task.TaskStatus.Wait;
+                XElement item = new XElement("TaskElement");
+
+                XElement value = new XElement("Value");
+                value.Value = task.Value;
+                item.Add(value);
+
+                XElement status = new XElement("Status");
+                status.Value = ((int)task.Status).ToString();
+                item.Add(status);
+
+                XElement dayOfWeek = new XElement("DayOfWeek");
+                dayOfWeek.Value = (((int)task.DayOfWeek).ToString()).ToString();
+                item.Add(dayOfWeek);
+
+                data.Add(item);
+            }
+
+            data.Save(DataFilePath);
         }
     }
 }
