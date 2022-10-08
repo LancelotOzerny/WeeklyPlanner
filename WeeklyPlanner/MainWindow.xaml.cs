@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Xml;
 using System.Xml.Linq;
-using System.Threading;
+using System.Linq;
 
 namespace WeeklyPlanner
 {
@@ -40,8 +39,11 @@ namespace WeeklyPlanner
         public void ShowTasks()
         {
             TasksContainer.Items.Clear();
+            DateTime dt = DateTime.Now;
 
-            foreach (Task item in _tasks)
+            var select = from task in _tasks where task.DayOfWeek == dt.DayOfWeek select task;
+
+            foreach (Task item in select)
             {
                 item.Margin = new Thickness(0, 10, 0, 0);
                 TasksContainer.Items.Add(item);
